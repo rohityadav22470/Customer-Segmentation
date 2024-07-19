@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Outfit", sans-serif;
+}
+
+body {
+  background-color: #F5F5F5;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.container {
+  padding-left: 2%;
+  padding-right: 1%;
+}
+
+.btn {
+  background: #fff;
+  color: #212121;
+  padding: 11px 25px;
+  font-size: 1.01rem;
+  border-radius: 30px;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-container {
+  background-color: hsl(240, 97%, 9%);
+}
+
+.btn2 {
+  position: relative;
+  animation: t_up 1.2s ease-out normal;
+}
+
+#kuchbhe:hover .haikuch:nth-child(1) {
+  position: relative;
+  left: 108px;
+  transition-duration: 0.3s;
+}
+
+#kuchbhe:hover .yebhe {
+  position: relative;
+  left: -40px;
+  transition-duration: 0.3s;
+}
