@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Segmentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .suboptions {
+            margin-left: 1.5rem; /* Indent suboptions */
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center justify-center">
+    <h1 class="text-5xl font-bold mb-6 text-center">Customer Segmentation</h1>
+    <div class="bg-white p-20 rounded shadow-md w-6/12 h-3/6 overflow-auto">
+        <form id="myForm" class="space-y-6 h-full flex flex-col justify-between">
+            <div>
+                <label class="inline-flex items-center cursor-pointer text-2xl">
+                    <input type="radio" class="form-radio cursor-pointer" name="segmentation" value="option1" checked>
+                    <span class="ml-2 cursor-pointer font-bold">Retail oriented Customer segmentation</span>
+                </label>
+            </div>
+            <div>
+                <label class="inline-flex items-center cursor-pointer text-2xl">
+                    <input type="radio" class="form-radio cursor-pointer" name="segmentation" value="option2">
+                    <span class="ml-2 cursor-pointer font-bold">Product oriented Customer segmentation</span>
+                </label>
+                <div id="productInput" class="suboptions hidden">
+                    <label class="inline-flex items-center cursor-pointer text-2xl">
+                        <input type="radio" class="form-radio cursor-pointer" name="subOption" value="age">
+                        <span class="ml-2 cursor-pointer">Age</span>
+                    </label>
+                    <br>
+                    <label class="inline-flex items-center cursor-pointer mt-2 text-2xl">
+                        <input type="radio" class="form-radio cursor-pointer" name="subOption" value="purchasingPower">
+                        <span class="ml-2 cursor-pointer">Purchasing Power</span>
+                    </label>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full w-8/12 font-bold">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div id="result" class="mt-4 hidden bg-blue-200 p-4 rounded w-6/12 text-center overflow-auto">
+        <h2 class="font-bold mb-4 text-3xl">Result</h2>
+        <div id="images" class="space-y-4"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('myForm');
+            const productInput = document.getElementById('productInput');
+            const result = document.getElementById('result');
+            const imagesDiv = document.getElementById('images');
+
+            form.addEventListener('change', function (event) {
+                if (event.target.name === 'segmentation') {
+                    if (event.target.value === 'option2') {
+                        productInput.classList.remove('hidden');
+                    } else {
+                        productInput.classList.add('hidden');
+                    }
+                }
+            });
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const selectedOption = document.querySelector('input[name="segmentation"]:checked').value;
+
+                let images = [];
+                if (selectedOption === 'option1') {
+                    images = ['static/images/image1.jpg', 'static/images/image2.jpg'];
+                }
+                else if (selectedOption === 'option2') {
+                    const selectedSubOption = document.querySelector('input[name="subOption"]:checked').value;
+                    if (selectedSubOption === 'age') {
+                        images = ['static/images/image5.jpg'];
+                    } else if (selectedSubOption === 'purchasingPower') {
+                        images = ['static/images/image6.jpg'];
+                    }
+                }
+
+                // Store images in localStoragei
+                localStorage.setItem('images', JSON.stringify(images));
+
+                // Reload the page
+                window.location.reload();
+            });
+
+            // Display images if available
+            if (localStorage.getItem('images')) {
+                const images = JSON.parse(localStorage.getItem('images'));
+                imagesDiv.innerHTML = '';
+                images.forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.classList.add('mb-4', 'max-w-full', 'h-auto');
+                    imagesDiv.appendChild(img);
+                });
+                result.classList.remove('hidden');
+                localStorage.removeItem('images');
+            }
+        });
+    </script>
+</body>
+
+</html>
